@@ -7,7 +7,7 @@ There are a lot of other, similar libraries for Node.js out there, that do simil
 
 * Allows for multiple backrounds works to be created.
 * Uses "require" to manage the code in the sub-modules.
-* Allows users to implement code that is compatible with the [``child_process.fork``](http://nodejs.org/docs/lastest/api/all.html#fork) call available with v0.5.*.
+* Allows users to implement code that is compatible with the [``child_process.fork``](http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork) call available with v0.5.*.
 
 Here is exampe for a master:
 
