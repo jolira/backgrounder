@@ -6,6 +6,8 @@ worker.on("message", function(message) {
     console.log(util.inspect(message, false, 100));
 });
 
+console.log(util.inspect(console));
+
 worker.send({
     "title": "hello world!",
     "flag": true
