@@ -1,7 +1,9 @@
 Backgrounder
 ====================================================
 
-This is a simple wrapper around the [``child_process.spawn``](http://nodejs.org/docs/v0.4.12/api/all.html#child_process.spawn) call supported by Node.js.
+Yet another wrapper around the [``child_process.spawn``](http://nodejs.org/docs/v0.4.12/api/all.html#child_process.spawn) call supported by Node.js.
+
+There are a lot of other, similar libraries for Node.js out there, that do similar ([as this is a very common problem](http://stackoverflow.com/questions/3809165/long-running-computations-in-node-js)).
 
 Here is exampe for a master:
 
