@@ -1,0 +1,20 @@
+{
+    "name": "backgrounder",
+    "description": "",
+    "url": "http://github.com/jolia/backgrounder",
+    "version": "0.0.1",
+    "author": "Joachim Kainz <info@jolira.com>",
+    "contributors": [{
+        "name": "Joachim Kainz",
+        "email": "info@jolira.com"
+    }],
+    "keywords": ["fork", "spawn", "child", "process", "worker"],
+    "repository": "git://github.com/jolira/backgrounder.git",
+    "main": "index",
+    "scripts": {
+        "prepublish": "npm prune"
+    },
+    "engines": {
+        "node": ">= 0.4.9"
+    }
+}

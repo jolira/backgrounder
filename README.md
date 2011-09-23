@@ -9,9 +9,11 @@ Here is exampe for a master:
 var util = require("util");
 var backgrounder = require("backgrounder");
 var worker = backgrounder.spawn("./worker");
+
 worker.on("message", function(message) {
     console.log(util.inspect(message, false, 100));
 });
+
 worker.send({
     "title": "hello world!",
     "flag": true
@@ -21,4 +23,15 @@ worker.send({
 This could be the code of the client:
 
 ```
+var util = require("util");
+
+console.log('Started the working');
+
+process.on('message', function(message) {
+    console.log('Worker received: %s', util.inspect(message, false, 100));
+
+    process.send({
+        "received": message
+    });
+});
 ```
