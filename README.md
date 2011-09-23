@@ -3,7 +3,11 @@ Backgrounder
 
 Yet another wrapper around the [``child_process.spawn``](http://nodejs.org/docs/v0.4.12/api/all.html#child_process.spawn) call supported by Node.js.
 
-There are a lot of other, similar libraries for Node.js out there, that do similar ([as this is a very common problem](http://stackoverflow.com/questions/3809165/long-running-computations-in-node-js)).
+There are a lot of other, similar libraries for Node.js out there, that do similar things ([as this is a very common problem](http://stackoverflow.com/questions/3809165/long-running-computations-in-node-js)). This particular one fits my problem set, as it
+
+* Allows for multiple backrounds works to be created.
+* Uses "require" to manage the code in the sub-modules.
+* Allows users to implement code that is compatible with the [``child_process.fork``](http://nodejs.org/docs/lastest/api/all.html#fork) call available with v0.5.*.
 
 Here is exampe for a master:
 
