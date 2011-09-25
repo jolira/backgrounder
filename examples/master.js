@@ -8,3 +8,4 @@ worker.send({
     "title": "hello world!",
     "flag": true
 });
+worker.terminate();
