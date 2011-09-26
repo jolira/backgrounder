@@ -1,18 +1,25 @@
-var util = require("util");
-
+//
+// Deal with configuration messages sent from the master
+//
+process.on('config', function(config) {
+    console.log('Worker: received configuration ', config);
+});
+//
+// Set up a message handler from messages sent from the master
+//
 process.on('message', function(message) {
-    console.log('Worker received a message from the master and is sending it back: ', message);
+    console.log('Worker: echoing ', message);
     process.send({
-        "client received": message
+        "Worker received": message
     });
 });
-process.on('config', function(config) {
-    console.log('Worker received the following configuration from the master: ', config);
-});
+//
+// Set up a handler that lets the user know that we have been asked to terminate
+//
 process.on('terminate', function() {
-    console.log('Worker received a request to termine from the master');
+    console.log('Worker: asked to terminate');
 });
 //
 // Let the users know that we are started. Logs are forwarded to the parent process and printed there.
 //
-console.log('Started the worker');
+console.log('Worker: Started!');
