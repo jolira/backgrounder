@@ -1,8 +1,18 @@
 var util = require("util");
-console.log('Started the worker');
+
 process.on('message', function(message) {
-    console.log('Worker received: %s', util.inspect(message, false, 100));
+    console.log('Worker received a message from the master and is sending it back: ', message);
     process.send({
-        "received": message
+        "client received": message
     });
 });
+process.on('config', function(config) {
+    console.log('Worker received the following configuration from the master: ', config);
+});
+process.on('terminate', function() {
+    console.log('Worker received a request to termine from the master');
+});
+//
+// Let the users know that we are started. Logs are forwarded to the parent process and printed there.
+//
+console.log('Started the worker');
