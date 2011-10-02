@@ -2,7 +2,10 @@ var backgrounder = require("../lib/backgrounder");
 //
 // Spawn the worker in a backround proccess
 //
-var worker = backgrounder.spawn(__dirname + "/worker.js", function(worker){
+var worker = backgrounder.spawn(__dirname + "/worker.js", {
+    "primaryDirective": "don't interfere",
+    "overdrive": true
+  }, function(worker){
     //
     // For this demo, let's just print any message we are receiving from the worker
     //
@@ -48,7 +51,4 @@ var worker = backgrounder.spawn(__dirname + "/worker.js", function(worker){
             console.error("Master: unexpected idle message ", counter, message);
         }
     });
-}, {
-    "primaryDirective": "don't interfere",
-    "overdrive": true
 });
