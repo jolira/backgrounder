@@ -82,7 +82,7 @@ var worker = backgrounder.spawn(__dirname + "/worker.js", {
     "primaryDirective": "don't interfere",
     "overdrive": true
   }, function(worker){
-    console.log("worker finished configuring!");
+    console.log("Master: worker finished configuring!");
     worker.terminate();
 });</code></pre>
 
