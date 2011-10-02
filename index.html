@@ -78,7 +78,7 @@ that must be called when the when the configuration process is completed. If a <
 to the spawn call, this callback will be invoked when the configuration completes.</p>
 
 <pre><code>var backgrounder = require("backgrounder");
-var worker = backgrounder.spawn(__dirname + "/worker.js", {
+backgrounder.spawn(__dirname + "/worker.js", {
     "primaryDirective": "don't interfere",
     "overdrive": true
   }, function(worker){
