@@ -7,8 +7,16 @@ process.on('config', function(config) {
 //
 // Set up a message handler from messages sent from the master
 //
-process.on('message', function(message) {
+process.on('message', function(message, callback) {
     console.log('Worker: echoing ', message);
+
+    if (callback) {
+        process.nextTick(function(){
+            callback("received", "this", message);
+        });
+        return;
+    }
+
     process.send({
         "Worker received": message
     });

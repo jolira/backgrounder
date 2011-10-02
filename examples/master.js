@@ -10,6 +10,18 @@ worker.on("message", function(message) {
     console.log("Master: received message ", message);
 });
 //
+// A little extension to the v0.5 API enables callbacks
+//
+function sendAndTerminteOnCallback() {
+  worker.send({
+      "company": "jolira"
+    }, function(arg1, arg2, arg3) {
+      console.log("Master: callback received with %s arguments:", arguments.length, arg1, arg2, arg3);
+      console.log("Master: calling terminate now");
+      worker.terminate();
+  });
+}
+//
 // Process messages that indicate that the workder has become idle. Both worker.config as well as
 // worker.send messages result in "idle" messages from the worker when the processing of the messages
 // is complete.
@@ -26,11 +38,12 @@ worker.on("idle", function(message) {
             "title": "hello world!",
             "flag": true
         });
-        return;
+        break;
     case 1:
-        console.log("Master: worker idle after messge, calling terminte...");
-        worker.terminate();
-        return;
+        sendAndTerminteOnCallback();
+        break;
+    case 2:
+        break;
     default:
         console.error("Master: unexpected idle message ", counter, message);
     }
