@@ -1,8 +1,9 @@
 //
 // Deal with configuration messages sent from the master
 //
-process.on('config', function(config) {
+process.on('config', function(config, callback) {
     console.log('Worker: received configuration ', config);
+    callback();
 });
 //
 // Set up a message handler from messages sent from the master
