@@ -115,11 +115,44 @@ function in the parent process and pass the same paramter as passed to the <code
 <pre><code>var backgrounder = require("backgrounder");
 var worker = backgrounder.spawn(__dirname + "/simple-worker.js");
 
-worker.cend({
+worker.send({
     "company": "jolira"
   }, function(arg1, arg2, arg3) {
     console.log("Master: client called the callback with %s arguments:", arguments.length, arg1, arg2, arg3);
     worker.terminate();
+});</code></pre>
+
+<h3>Worker</h3>
+
+<p>No special <code>require</code> statement is necessary on the client as the client is launched by the backgrounder library,
+which defines all necessary call and symbols before invoking the client code.<p>
+
+<p>It is very important to note that worker code must not directly interact with <code>stdin</code>, <code>stdout</code>,
+and <code>sterr</code> as the backgrounder uses these facilities to communicate with the parent process. Instead, use
+the <code>console</code> object to print error and other information. The <code>console</code> has been modifed for the
+worker to forward all logs and error to the parent process so they can be printed there.</p>
+
+<h4><code>process.on(event, nofifier)</code></h4>
+
+<p>For workers the backgrounder adds new events to the <code>process</code> object. The new events are <code>'message'</code>
+(for user-defined messages sent by the parent using <code>worker.send(message[, callback])</code>) and <code>'config'</code>
+(for configuration messages sent by the parent using <code>worker.config(message[, callback])</code>). Both these
+events have a first prameter, which contains the JSON data sent by the parent and an optional second parameter, which is
+the callback function to invoked to send information back to the parent.</p>
+
+<pre><code>process.on('message', function(message, callback) {
+    console.log('Worker: "processing" ', message);
+
+    callback("received", "this", message);
+});</code></pre>
+
+<h4><code>process.send(message)</code></h4>
+
+<p>Send a user-defined message back to the parent. The parent must register <code>worker.on("message", callback)</code>
+to receive the message.</p>
+
+<pre><code>process.send({
+    "answer": 42
 });</code></pre>
 
 <h2>Examples</h2>
@@ -130,28 +163,7 @@ code can be found at <a href="https://raw.github.com/jolira/backgrounder/master/
 
 <h3>Using the Callback API</h3>
 
-A very simple example for using this library can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>. This example demonstrates how to pass a callback-function to the <code>send(..)</code>
-to find out when the client finished processing. The callback can also contain a arbitrary number of parameters.
-
-<pre><code>var backgrounder = require("backgrounder");
-var worker = backgrounder.spawn(__dirname + "/simple-worker.js");
-
-worker.send({
-    "company": "jolira"
-  }, function(arg1, arg2, arg3) {
-    console.log("Master: client called the callback with %s arguments:", arguments.length, arg1, arg2, arg3);
-    worker.terminate();
-});</code></pre>
-
-The request send in the example above is processed by the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-worker.js"><code>simple-worker.js</code></a>.
-
-<pre><code>process.on('message', function(message, callback) {
-    console.log('Worker: "processing" ', message);
-
-    callback("received", "this", message);
-});
-
-console.log('Worker: Started!');</code></pre>
+A very simple example for using this library can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>. The code for the matching worker can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-worker.js"><code>simple-worker.js</code></a>.
 
 When running the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>,
 the console output should look like this:
@@ -162,6 +174,7 @@ Worker: "processing"  { company: 'jolira' }
 Master: client called the callback with 3 arguments: received this { company: 'jolira' }</code></pre>
 
 <h2>License</h2>
+
 <pre><code>Copyright (c) 2011 jolira
 
 Permission is hereby granted, free of charge, to any person obtaining a
