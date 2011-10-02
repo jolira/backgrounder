@@ -1,8 +1,8 @@
 {
     "name": "backgrounder",
     "description": "yet another library for creating background workers; supports multiple independent workers, v0.5 fork API to communicate with them as well as callbacks between processes",
-    "url": "http://github.com/jolia/backgrounder",
-    "version": "0.1.2",
+    "url": "http://jolira.github.com/backgrounder/",
+    "version": "0.1.5",
     "author": "Joachim Kainz <info@jolira.com>",
     "contributors": [{
         "name": "Joachim Kainz",
