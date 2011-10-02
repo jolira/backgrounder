@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <title>backgrounder</title>
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #F7F8E0;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #DBA901; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none; }
+    h2 { font-size: 1.5em; color: #DBA901; }
+    h3 { text-align: center; color: #DBA901; }
+    a { color: #DBA901; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa;}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+
+<body>
+
+<div id="container">
+<img src="jolira.png" alt="jolira">
+
+<h1><a href="http://github.com/jolira/backgrounder">backgrounder</a></h1>
+
+<div class="description">yet another library for creating background workers; supports multiple independent workers, v0.5 fork API to communicate with them as well as callbacks between processes</div>
+
+<p>This library is very similar to <a href="https://github.com/pgriess/node-webworker">node-webworker</a>,
+<a href="https://github.com/robtweed/Q-Oper8">Q-Oper8</a> and several others.</p>
+
+<p>Features of this library include:</p>
+
+<ul>
+<li><p>Supports multiple independenc backround to be created.</p></li>
+<li><p>Allows users to implement code that is compatible with the <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork<code></a> call available with version v0.5 of node.js.</p></li>
+<li><p>An extended API supports callbacks from the background processes</p></li>
+<li><p>Child processes can use <code>console.log<code> and other console function; the logs are printed by the main process.</p></li>
+<li><p>Power-users get fine-grained control over the task queues via messages such as <code>&quot;code&quot;</code>, <code>&quot;idle&quot;</code>, <code>&quot;completed&quot;</code>, and may others.</p></li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<pre><code>npm install backgrounder</code></pre>
+
+<h2>License</h2>
+<pre><code>Copyright (c) 2011 jolira
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.</code></pre>
+
+<h2>Authors</h2>
+
+<p>Jolira Development &lt;dev@jolira.com&gt;</p>
+
+<h2>Download</h2>
+
+<div class="download">
+<a href="http://github.com/jolira/backgrounder/zipball/master"><img
+border="0" width="90"
+src="http://github.com/images/modules/download/zip.png"></a> <a
+href="http://github.com/jolira/backgrounder/tarball/master"><img border="0"
+width="90" src="http://github.com/images/modules/download/tar.png"></a> </div>
+
+<p>Github Repo: <a
+href="http://github.com/jolira/backgrounder">http://github.com/jolira/backgrounder</a></p>
+<pre><code>$ git clone git://github.com/jolira/backgrounder</code></pre>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-3602945-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</div>
+</body>
+</html>
