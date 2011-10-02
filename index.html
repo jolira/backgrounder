@@ -43,7 +43,7 @@
 <p>Features of this library include:</p>
 
 <ul>
-<li>Supports multiple independenc backround to be created.</li>
+<li>Supports multiple independent background processes.</li>
 <li>Allows users to implement code that is compatible with the <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork</code></a> call available with version v0.5 of node.js.</li>
 <li>An extended API supports callbacks from the background processes</li>
 <li>Child processes can use <code>console.log</code> and other console function; the logs are printed by the main process.</li>
@@ -54,6 +54,73 @@
 <h2>Installation</h2>
 
 <pre><code>npm install backgrounder</code></pre>
+
+<h2>Usage</h2>
+
+<h3>Master</h3>
+
+<h4><code>backgrounder.spawn(filename)</code></h4>
+
+<p>Spawn a new background process. The <code>filename</code> must be the fully qualified name of the node.js file used to
+run the worker, as in:<p>
+
+<pre><code>var backgrounder = require("backgrounder");
+var worker = backgrounder.spawn(__dirname + "/simple-worker.js");</code></pre>
+
+<p>The backgrounder automatically set up a two way communciation channel with the worker process using <code>stdin</code>
+and <code>stdout</code>. Any <code>console</code> messages produced by the child process are automatically forwarded
+to the parent process and printed there.</p>
+
+<h4><code>worker.on(event, callback)</code></h4>
+
+<p>Register to receive messages form the client. Messages include <code>'message'</code> indicating that the worker
+process sent an arbitrary user-defined message using the <code>process.send(..)</code> call/</p>, <code>'idle'</code>
+to indicate that the worker has completed processing all messages in its queue (there may be asynchronous tasks
+pending tough), and <code>'completed'</code> for ever message that was processed by the worker.</p>
+
+<pre><code>worker.on("idle", function(message) {
+    console.log("Master: worker became idle");
+});</code></pre>
+
+<h4><code>worker.config(message[, callback])</code></h4>
+
+<p>Send a <code>message</code> to the worker containing some configurtion information. The message must be valid JSON.
+This call creates <code>'config'</code> event for the worker. The worker must call <code>process.on('config', nofifier)</code>
+to receive the message. The <code>message</code> will be passed as the first parameter to the <code>notifier</code>.
+If a <code>callback</code> is provided, the <code>notifier</code> will have a <code>function</code>-object a the second
+parameter. Invoking this <code>function</code>-object in the worker process will in turn call the <code>callback</code>
+function in the parent process and pass the same paramter as passed to the <code>function</code>-object in the worker
+(as long as all parameters are valid JSON).</p>
+
+<pre><code>var backgrounder = require("backgrounder");
+var worker = backgrounder.spawn(__dirname + "/simple-worker.js");
+
+worker.config({
+    "company": "jolira"
+  }, function(arg1, arg2, arg3) {
+    console.log("Master: client called the callback with %s arguments:", arguments.length, arg1, arg2, arg3);
+    worker.terminate();
+});</code></pre>
+
+<h4><code>worker.send(message[, callback])</code></h4>
+
+<p>Send a user-defined <code>message</code> to the worker The message must be valid JSON.
+This call creates <code>'message'</code> event for the worker. The worker must call <code>process.on('message', nofifier)</code>
+to receive the message. The <code>message</code> will be passed as the first parameter to the <code>notifier</code>.
+If a <code>callback</code> is provided, the <code>notifier</code> will have a <code>function</code>-object a the second
+parameter. Invoking this <code>function</code>-object in the worker process will in turn call the <code>callback</code>
+function in the parent process and pass the same paramter as passed to the <code>function</code>-object in the worker
+(as long as all parameters are valid JSON).</p>
+
+<pre><code>var backgrounder = require("backgrounder");
+var worker = backgrounder.spawn(__dirname + "/simple-worker.js");
+
+worker.cend({
+    "company": "jolira"
+  }, function(arg1, arg2, arg3) {
+    console.log("Master: client called the callback with %s arguments:", arguments.length, arg1, arg2, arg3);
+    worker.terminate();
+});</code></pre>
 
 <h2>Examples</h2>
 
