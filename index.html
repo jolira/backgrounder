@@ -43,11 +43,11 @@
 <p>Features of this library include:</p>
 
 <ul>
-<li><p>Supports multiple independenc backround to be created.</p></li>
-<li><p>Allows users to implement code that is compatible with the <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork</code></a> call available with version v0.5 of node.js.</p></li>
-<li><p>An extended API supports callbacks from the background processes</p></li>
-<li><p>Child processes can use <code>console.log</code> and other console function; the logs are printed by the main process.</p></li>
-<li><p>Power-users get fine-grained control over the task queues via messages such as <code>&quot;code&quot;</code>, <code>&quot;idle&quot;</code>, <code>&quot;completed&quot;</code>, and may others.</p></li>
+<li>Supports multiple independenc backround to be created.</li>
+<li>Allows users to implement code that is compatible with the <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork</code></a> call available with version v0.5 of node.js.</li>
+<li>An extended API supports callbacks from the background processes</li>
+<li>Child processes can use <code>console.log</code> and other console function; the logs are printed by the main process.</li>
+<li>Power-users get fine-grained control over the task queues via messages such as <code>&quot;code&quot;</code>, <code>&quot;idle&quot;</code>, <code>&quot;completed&quot;</code>, and may others.</li>
 </ul>
 
 
@@ -60,6 +60,39 @@
 <a href="https://raw.github.com/jolira/backgrounder/master/examples/master.js"><code>master.js</code></a> is a every comprehensive
 example for all the different features available for creating background workers and communicating with them. The associated worker
 code can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/worker.js"><code>worker.js</code></a>.
+
+<h2>A Simple Example</h2>
+
+A very simple example for using this library can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>. This example demonstrates how to pass a callback-function to the <code>send(..)</code>
+to find out when the client finished processing. The callback can also contain a arbitrary number of parameters.
+
+<pre><code>var backgrounder = require("backgrounder");
+var worker = backgrounder.spawn(__dirname + "/simple-worker.js");
+
+worker.send({
+    "company": "jolira"
+  }, function(arg1, arg2, arg3) {
+    console.log("Master: client called the callback with %s arguments:", arguments.length, arg1, arg2, arg3);
+    worker.terminate();
+});</code></pre>
+
+The request send in the example above is processed by the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-worker.js"><code>simple-worker.js</code></a>.
+
+<pre><code>process.on('message', function(message, callback) {
+    console.log('Worker: "processing" ', message);
+
+    callback("received", "this", message);
+});
+
+console.log('Worker: Started!');</code></pre>
+
+When running the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>,
+the console output should look like this:
+
+<pre><code>jfk@graz:~/workspace/1/backgrounder$ node examples/simple-master.js
+Worker: Started!
+Worker: "processing"  { company: 'jolira' }
+Master: client called the callback with 3 arguments: received this { company: 'jolira' }</code></pre>
 
 <h2>License</h2>
 <pre><code>Copyright (c) 2011 jolira
