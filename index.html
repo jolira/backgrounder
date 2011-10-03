@@ -48,6 +48,8 @@
 <li>An extended API supports callbacks from the background processes</li>
 <li>Child processes can use <code>console.log</code> and other console function; the logs are printed by the main process.</li>
 <li>Power-users get fine-grained control over the task queues via messages such as <code>&quot;code&quot;</code>, <code>&quot;idle&quot;</code>, <code>&quot;completed&quot;</code>, and may others.</li>
+<li>Instead of only one background worker, the user can select to manage a pool of background workers</li>
+<li>The backgrounder manages a queue of pending messages in case the pool of spawned resources is busines</li>
 </ul>
 
 
