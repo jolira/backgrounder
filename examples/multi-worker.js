@@ -1,11 +1,11 @@
 var http = require('http');
-var id = Math.random()*10000000000000000;
+var id = process.pid;
 
 process.on('message', function(message, callback) {
     var options = {
-      host: 'www.google.com',
+      host: 'jolira.github.com',
       port: 80,
-      path: '/index.html'
+      path: '/backgrounder/'
     };
 
     http.get(options, function(res) {
