@@ -113,7 +113,7 @@ to the event as the second parameter exactly once:</p>
 <p>Passing <code>"children-count"</code> as part of the <code>config</code> parameter creats a work-pool instead of a
 single worker. The backgrounder automatically chooses an idle worker when sending messages.</p>
 
-<pre><code>var backgrounder = require("../lib/backgrounder");
+<pre><code>var backgrounder = require("backgrounder");
 var worker = backgrounder.spawn(__dirname + "/multi-worker.js", {
     "children-count" : 5
 });</code></pre>
