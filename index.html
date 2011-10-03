@@ -44,14 +44,13 @@
 
 <ul>
 <li>Supports multiple independent background processes.</li>
-<li>Allows users to implement code that is compatible with the <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork</code></a> call available with version v0.5 of node.js.</li>
+<li>Create and manage pools of background workers</li>
+<li>Manages queues of pending messages</li>
+<li>Supports an API compatible with v0.5 <a href="http://nodejs.org/docs/v0.5.6/api/all.html#child_process.fork"><code>child_process.fork</code></a>.</li>
 <li>An extended API supports callbacks from the background processes</li>
 <li>Child processes can use <code>console.log</code> and other console function; the logs are printed by the main process.</li>
 <li>Power-users get fine-grained control over the task queues via messages such as <code>&quot;code&quot;</code>, <code>&quot;idle&quot;</code>, <code>&quot;completed&quot;</code>, and may others.</li>
-<li>Instead of only one background worker, the user can select to manage a pool of background workers</li>
-<li>The backgrounder manages a queue of pending messages in case the pool of spawned resources is busines</li>
 </ul>
-
 
 <h2>Installation</h2>
 
@@ -88,14 +87,23 @@ backgrounder.spawn(__dirname + "/worker.js", {
     worker.terminate();
 });</code></pre>
 
-To worker much register to receive the <code>"config"</code> event and call the <code>callback</code> function passed
-to the event as the second parameter exactly once:
+<p>To worker much register to receive the <code>"config"</code> event and call the <code>callback</code> function passed
+to the event as the second parameter exactly once:</p>
 
 <pre><code>process.on('config', function(config, callback) {
     console.log('Worker: received configuration ', config);
     callback();
 });</code></pre>
 
+<h5>Pools of Workers</h5>
+
+<p>Passing <code>"children-count"</code> as part of the <code>config</code> parameter creats a work-pool instead of a
+single worker. The backgrounder automatically chooses an idle worker when sending messages.</p>
+
+<pre><code>var backgrounder = require("../lib/backgrounder");
+var worker = backgrounder.spawn(__dirname + "/multi-worker.js", {
+    "children-count" : 5
+});</code></pre>
 
 <h4><code>worker.on(event, callback)</code></h4>
 
@@ -163,21 +171,48 @@ to receive the message.</p>
 
 <h2>Examples</h2>
 
-<a href="https://raw.github.com/jolira/backgrounder/master/examples/master.js"><code>master.js</code></a> is a every comprehensive
+<p><a href="https://raw.github.com/jolira/backgrounder/master/examples/master.js"><code>master.js</code></a> is a every comprehensive
 example for all the different features available for creating background workers and communicating with them. The associated worker
-code can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/worker.js"><code>worker.js</code></a>.
+code can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/worker.js"><code>worker.js</code></a>.</p>
 
 <h3>Using the Callback API</h3>
 
-A very simple example for using this library can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>. The code for the matching worker can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-worker.js"><code>simple-worker.js</code></a>.
+<p>A very simple example for using this library can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>. The code for the matching worker can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-worker.js"><code>simple-worker.js</code></a>.</p>
 
-When running the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>,
-the console output should look like this:
+<p>When running the <a href="https://raw.github.com/jolira/backgrounder/master/examples/simple-master.js"><code>simple-master.js</code></a>,
+the console output should look like this:</p>
 
 <pre><code>jfk@graz:~/workspace/1/backgrounder$ node examples/simple-master.js
 Worker: Started!
 Worker: "processing"  { company: 'jolira' }
 Master: client called the callback with 3 arguments: received this { company: 'jolira' }</code></pre>
+
+<h3>Pools of Workers</h3>
+
+<p>An example for using a pool of workers can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/multi-master.js"><code>multi-master.js</code></a>. The code for the matching worker can be found at <a href="https://raw.github.com/jolira/backgrounder/master/examples/multi-worker.js"><code>multi-worker.js</code></a>.</p>
+
+<p>When running the <a href="https://raw.github.com/jolira/backgrounder/master/examples/mutli-master.js"><code>multi-master.js</code></a>,
+the console output should look something like this:</p>
+
+<pre><code>jfk@graz:~/workspace/1/backgrounder$ node examples/multi-master.js
+Worker: Started 2003116079140454.5!
+Worker: Started 5876634104643017!
+Worker: Started 1082972509320825.4!
+Worker: Started 2003116079140454.5!
+Worker: Started 1082972509320825.4!
+Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
+Master: client called the callback with 3 arguments: 1082972509320825.4 status-code: 200
+Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
+Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
+Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
+Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
+Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
+Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
+Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
+Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200</code></pre>
+
+<p>Your output may vary as the clients are identified by random number and the OS scheduler assigns work to the processes
+in a manner that differs frorm run to run.</p>
 
 <h2>License</h2>
 
