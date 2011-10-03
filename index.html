@@ -108,7 +108,7 @@ var worker = backgrounder.spawn(__dirname + "/multi-worker.js", {
 <h4><code>worker.on(event, callback)</code></h4>
 
 <p>Register to receive messages form the client. Messages include <code>'message'</code> indicating that the worker
-process sent an arbitrary user-defined message using the <code>process.send(..)</code> call/</p>, <code>'idle'</code>
+process sent an arbitrary user-defined message using the <code>process.send(..)</code> call</p>, <code>'idle'</code>
 to indicate that the worker has completed processing all messages in its queue (there may be asynchronous tasks
 pending tough), and <code>'completed'</code> for ever message that was processed by the worker.</p>
 
