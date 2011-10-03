@@ -1,8 +1,8 @@
 {
     "name": "backgrounder",
-    "description": "yet another library for spawning multiple independent background workers as well as multiple pool of workers, v0.5 fork API to communicate with them as well as callbacks between processes",
-    "version": "0.2.1",
-    "homepage": "http://jolira.github.com/backgrounder/",
+    "description": "yet another library for spawning multiple independent background workers as well as multiple pool of workers, v0.5 fork API to communicate with them; there is also communications API based on callbacks",
+    "version": "0.2.2",
+    "homepage": "http://jolira.github.com/backgrounder",
     "author": "Joachim Kainz <info@jolira.com>",
     "contributors": [{
         "name": "Joachim Kainz",
