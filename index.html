@@ -195,21 +195,21 @@ Master: client called the callback with 3 arguments: received this { company: 'j
 the console output should look something like this:</p>
 
 <pre><code>jfk@graz:~/workspace/1/backgrounder$ node examples/multi-master.js
-Worker: Started 2003116079140454.5!
-Worker: Started 5876634104643017!
-Worker: Started 1082972509320825.4!
-Worker: Started 2003116079140454.5!
-Worker: Started 1082972509320825.4!
-Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
-Master: client called the callback with 3 arguments: 1082972509320825.4 status-code: 200
-Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
-Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
-Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
-Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
-Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200
-Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
-Master: client called the callback with 3 arguments: 2003116079140454.5 status-code: 200
-Master: client called the callback with 3 arguments: 5876634104643017 status-code: 200</code></pre>
+Worker: Started 6478!
+Worker: Started 6480!
+Worker: Started 6482!
+Worker: Started 6479!
+Worker: Started 6481!
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6482 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6480 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200
+Master: client called the callback with 3 arguments: 6478 status-code: 200</code></pre>
 
 <p>Your output may vary as the clients are identified by random number and the OS scheduler assigns work to the processes
 in a manner that differs frorm run to run.</p>
