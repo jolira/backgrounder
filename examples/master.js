@@ -47,8 +47,11 @@ backgrounder.spawn(__dirname + "/worker.js", {
             break;
         case 2:
             break;
+        case 3:
+            console.log("Master: child idle before terminate");
+            break;
         default:
-            console.error("Master: unexpected idle message ", counter, message);
+            console.error("Master: unexpected idle message", counter);
         }
     });
 });
