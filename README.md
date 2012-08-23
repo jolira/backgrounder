@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/jolira/backgrounder.png)](http://travis-ci.org/jolira/backgrounder)
 Backgrounder
 ====================================================
 
